@@ -7,76 +7,58 @@ import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class Personas {
+    private  String usario;
+    private  String contraseña;
 
-    private Array[] datos= new Array[2];
-    private  String Nombre;
-    private  String Correo;
-    private  String Contaseña;
-    private  String Edad;
-    private  String Telefono;
-    private  String Usuario;
-    private  String Ususariol;
-    private  String Contraseñal;
-
-    public Personas() {
+    public String getUsario() {
+        return usario;
     }
 
-    public String getNombre() {
-        return Nombre;
+    public void setUsario(String usario) {
+        this.usario = usario;
     }
 
-    public void setNombre(String nombre) {
-        Nombre = nombre;
+    public String getContraseña() {
+        return contraseña;
     }
 
-    public String getCorreo() {
-        return Correo;
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
+    public  static Vector mostrar()
+    {
+        return ListaUsuario.consulta();
+    }
+    public  static int  verificar(String usuario)
+    {
+    Vector lista = mostrar();
+    Personas  persona;
+    for (int i=0;i<lista.size();i++)
+        {
+            persona=(Personas)lista.elementAt(i);
+            if (persona.getUsario().equalsIgnoreCase(usuario))
+            {
+return  i;
+            }
+        }
+    return  -1;
     }
 
-    public void setCorreo(String correo) {
-        Correo = correo;
+    public  static  int datoscorrectos(String usario,String contraseña)
+    {
+Vector lista= mostrar();
+Personas personas;
+        for (int i=0;i<lista.size();i++)
+        {
+            personas=(Personas)lista.elementAt(i);
+            if (personas.getUsario().equalsIgnoreCase(usario) && personas.getContraseña().equalsIgnoreCase(contraseña))
+            {
+return  i;
+            }
+        }
+        return -1;
     }
-
-    public String getContaseña() {
-        return Contaseña;
-    }
-
-    public void setContaseña(String contaseña) {
-        Contaseña = contaseña;
-    }
-
-    public String getEdad() {
-        return Edad;
-    }
-
-    public void setEdad(String edad) {
-        Edad = edad;
-    }
-
-    public String getTelefono() {
-        return Telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        Telefono = telefono;
-    }
-
-    public String getUsuario() {
-        return Usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        Usuario = usuario;
-    }
-
-    public String getUsusariol() {
-        return Ususariol;
-    }
-
-    public void setUsusariol(String ususariol) {
-        Ususariol = ususariol;
-    }
-
 }

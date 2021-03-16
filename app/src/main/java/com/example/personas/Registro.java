@@ -39,26 +39,27 @@ public class Registro extends AppCompatActivity {
                 tel=telefono.getText().toString();
                 ed=edad.getText().toString();
                 Personas nuevo = new Personas();
-                nuevo.setNombre(nom);
-                nuevo.setUsuario(usu);
-                nuevo.setCorreo(core);
-                nuevo.setContaseña(con);
-                nuevo.setTelefono(tel);
-                nuevo.setEdad(ed);
                 if(nombre.getText().toString().isEmpty()||usuario.getText().toString().isEmpty()||correo.getText().toString().isEmpty()||contraseña.getText().toString().isEmpty()||telefono.getText().toString().isEmpty()||edad.getText().toString().isEmpty())
                 {
 
                     dialogo();
                 }else
-                {
+                if (Personas.verificar(usu)==-1) {
+                    nuevo.setUsario(usu);
+                    nuevo.setContraseña(con);
+                    ListaUsuario.agregar(nuevo);
                     dialogo2();
-                    nombre.setText("");
                     usuario.setText("");
+                    nombre.setText("");
                     correo.setText("");
                     contraseña.setText("");
                     telefono.setText("");
                     edad.setText("");
+                }else {
+                    dialogo3();
+                    usuario.setText("");
                 }
+
 
             }
         });
@@ -77,35 +78,25 @@ public class Registro extends AppCompatActivity {
 
     public  AlertDialog dialogo2()
     {
-        String nom,usu,core,con,tel,ed;
-        EditText nombre=(EditText) findViewById(R.id.editNombre);
-        EditText usuario=(EditText) findViewById(R.id.editUsuario);
-        EditText correo=(EditText) findViewById(R.id.editCorreo);
-        EditText contraseña=(EditText) findViewById(R.id.editContrseña);
-        EditText telefono=(EditText) findViewById(R.id.editTelefono);
-        EditText edad=(EditText) findViewById(R.id.editEdad);
-        nom=nombre.getText().toString();
-        usu=usuario.getText().toString();
-        core=correo.getText().toString();
-        con=contraseña.getText().toString();
-        tel=telefono.getText().toString();
-        ed=edad.getText().toString();
         AlertDialog.Builder  builder= new AlertDialog.Builder(this);
-        builder.setTitle("Datos Correctos");
-        builder.setMessage("Datos Guardados");
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+        builder.setTitle("Usuarios");
+        builder.setMessage("Usuario Guardado");
+        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent Nuevo =new Intent(Registro.this,MainActivity.class);
-                Nuevo.putExtra("nombre",nom);
-                Nuevo.putExtra("usuario",usu);
-                Nuevo.putExtra("correo",core);
-                Nuevo.putExtra("contra",con);
-                Nuevo.putExtra("tel",tel);
-                Nuevo.putExtra("edad",ed);
-                startActivity(Nuevo);
+                Intent  nuevo = new Intent(Registro.this,MainActivity.class);
+                startActivity(nuevo);
             }
         });
+        builder.create();
+        return builder.show();
+    }
+    public  AlertDialog dialogo3()
+    {
+        AlertDialog.Builder  builder= new AlertDialog.Builder(this);
+        builder.setTitle("Usuarios");
+        builder.setMessage("Usuario Existente Ingrese otro usuario");
+        builder.setNegativeButton("ok",null);
         builder.create();
         return builder.show();
     }

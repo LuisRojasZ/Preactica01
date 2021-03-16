@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -28,47 +30,24 @@ public class MainActivity extends AppCompatActivity {
         Iniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String usuari,con,con1,usuari1,nombre,correo,tel,ed;
-                Intent Nuevo =new Intent(MainActivity.this,Datos.class);
-                EditText usu=(EditText) findViewById(R.id.editNombrel);
-                EditText contra =(EditText) findViewById(R.id.editContraseñal);
-                usuari=usu.getText().toString();
-                con=contra.getText().toString();
-                Bundle extras = getIntent().getExtras();
-                String d1=extras.getString("nombre");
-                String d2=extras.getString("usuario");
-                String d3=extras.getString("correo");
-                String d4=extras.getString("contra");
-                String d5=extras.getString("tel");
-                String d6=extras.getString("edad");
-                con1=d4;
-                usuari1=d2;
-                nombre=d1;
-                correo=d3;
-                tel=d5;
-                ed=d6;
-                if(usu.getText().toString().isEmpty()||contra.getText().toString().isEmpty())
+               String usuari, con;
+                EditText usu = (EditText) findViewById(R.id.editNombrel);
+                EditText contra = (EditText) findViewById(R.id.editContraseñal);
+                usuari = usu.getText().toString();
+                con = contra.getText().toString();
+                int pos = Personas.datoscorrectos(usuari,con);
+                if(pos==-1)
                 {
-                    dialogo();
-                }
-                if (usuari.equals(usuari1)&&con.equals(con1))
-                {
-                    Nuevo.putExtra("nombre",nombre);
-                    Nuevo.putExtra("usuario",usuari1);
-                    Nuevo.putExtra("correo",correo);
-                    Nuevo.putExtra("contra",con1);
-                    Nuevo.putExtra("tel",tel);
-                    Nuevo.putExtra("edad",ed);
-                    startActivity(Nuevo);
+                   dialogo2();
+               }
+               else {
+                       Intent  nuevo = new Intent(MainActivity.this,Datos.class);
+                startActivity(nuevo);
+                usu.setText("");
+                contra.setText("");
                 }
 
-                    else {
-
-                    dialogo2();
-
-                    }
-                }
-
+            }
 
         });
     }
